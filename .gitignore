@@ -1,0 +1,9 @@
+*.user
+*.obj
+*.recipe
+/.vs
+*.tlog
+*.idb
+*.pdb
+*.log
+*.filters
