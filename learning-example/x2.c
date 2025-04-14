@@ -1,3 +1,5 @@
+/*
+
 #include<stdio.h>
 void ExGCD(int a, int b, int* d, int* x, int* y)
 {
@@ -11,6 +13,12 @@ void ExGCD(int a, int b, int* d, int* x, int* y)
         return;
     }
     int dd, xx, yy; //分别代表伪代码中的d',x',y'
+	ExGCD(b, a % b, &dd, &xx, &yy); //递归调用ExGCD函数
+	*d = dd; //将dd赋给d指向的变量
+	*x = yy; //将yy赋给x指向的变量
+    
+	*y = xx - (a / b) * yy; //将xx-(a/b)*yy赋给y指向的变量
+
     //根据伪代码，调用ExGCD，传入dd,xx,yy的【地址】获得计算结果
     //根据伪代码进行计算，并赋给d,x,y指向的变量
 }
@@ -27,3 +35,6 @@ int main()
     //输出
     return 0;
 }
+*/
+//欧几里得算法
+//扩展欧几里得算法
