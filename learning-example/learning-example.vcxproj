@@ -132,6 +132,8 @@
     <ClCompile Include="x3.c" />
     <ClCompile Include="x4.c" />
     <ClCompile Include="x5.c" />
+    <ClCompile Include="x6.c" />
+    <ClCompile Include="x7.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
