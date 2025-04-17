@@ -1,74 +1,45 @@
-//#include<stdio.h>
-//#include<stdlib.h>
-//
-//typedef struct _interval
-//{
-//    int l;
-//    int r;
-//    int lx;
-//    int rx;
-//
-//
-//} x, * y;
-//int cmp(const void* h, const void* j)
-//{
-//	x* aa = (x*)h;
-//	x* bb = (x*)j;
-//    if (aa->l > bb->l)
-//        return 1;
-//    if(aa->l<bb->l)
-//
-//		return -1;
-//    if(aa->lx>bb->lx)
-//		return 1;
-//    if(aa->lx<bb->lx)
-//		return -1;
-//    return 0;
-//
-//
-//	
-//}   
-//x a[100005];
-//int main()
-//
-//{
-//    int n = 0;
-//    char u,i;
-//
-//    while ((scanf("%c%d,%d%c", &u,&a[n].l,&a[n].r,&i) != EOF))
-//    {
-//        if (u == '[')
-//            a[n].lx = 1;
-//        else
-//            a[n].lx = 0;
-//        if (i == '[')
-//            a[n].rx = 1;
-//        else
-//            a[n].rx = 0;
-//
-//        n++;
-//    }
-//	qsort(a, n, sizeof(x), cmp);
-//   
-//    for (int d = 0;d < n;)
-//    {
-//		x p = a[d];
-//        for (++d;d < n && (a[d].l < p.r || (a[d].l == p.r && a[d].lx < p.rx));d++)
-//        {
-//			if (a[d].r > p.r)
-//			{
-//				p.r = a[d].r;
-//				p.rx = a[d].rx;
-//			}
-//            else if (a[d].r == p.r && a[d].rx > p.rx)
-//            {
-//				p.rx = a[d].rx;
-//            }
-//				
-//			
-//
+//#include <stdio.h>
+//int a[100005];
+//void f(int* a, int* b) {
+//    int temp = *a;
+//    *a = *b;
+//    *b = temp;
+//}
+//int g(int a[], int low, int high) {
+//    int y = a[high]; 
+//    int i = (low - 1);
+//    for (int j = low; j <= high - 1; j++) {
+//      
+//        if (a[j] <= y) {
+//            i++;  
+//           f(&a[i], &a[j]);
 //        }
-//		printf("%c%d,%d%c\n", p.lx == 1 ? '[' : '(', p.l, p.r, p.rx == 1 ? ']' : ')');
-//
 //    }
+//    f(&a[i + 1], &a[high]);
+//    return (i + 1);
+//}
+//void cmp(int a[], int low, int high) {
+//    if (low < high) {
+//       
+//        int x = g(a, low, high);
+//
+//       
+//        cmp(a, low, x - 1);
+//        cmp(a, x + 1, high);
+//    }
+//}
+//
+//int main() {
+//    int n;
+//	scanf("%d", &n);
+//	for (int i = 0; i < n; i++) {
+//		scanf("%d", &a[i]);
+//	}
+//   
+//    cmp(a, 0, n - 1);
+//	for (int i = 0; i < n; i++) {
+//		printf("%d ", a[i]);
+//	}
+//
+//    return 0;
 //}

@@ -1,86 +1,98 @@
 //#include <stdio.h>
 //#include <stdlib.h>
-//#include <string.h>
-//#include <ctype.h>
+//#define N 500005
 //
-//// 定义一个结构体来存储区间
-//typedef struct {
-//    int left;
-//    int right;
-//    int left_inclusive;  // 左端点是否包含，1表示包含，0表示不包含
-//    int right_inclusive; // 右端点是否包含，1表示包含，0表示不包含
-//} Interval;
+//// 辅助函数
+//int parent(int i) { return i / 2; } // 在数组结构的二叉树中，返回结点i的父节点下标
+//int left(int i) { return 2 * i; } // i的左子节点下标
+//int right(int i) { return 2 * i + 1; } // i的右子节点下标
+//void exchange(int* a, int* b) { // 交换a、b指针内的数
+//    int tmp = *a;
+//    *a = *b;
+//    *b = tmp;
+//}
 //
-//// 解析区间字符串，填充Interval结构体
-//int parse_interval(const char* str, Interval* interval) {
-//    int len = strlen(str);
-//    // 检查字符串是否符合格式要求
-//    if (len < 5 || str[0] != '(' && str[0] != '[' || str[len - 1] != ')' && str[len - 1] != ']') {
-//        return 0;
-//    }
-//    // 确定左端点是否包含
-//    interval->left_inclusive = (str[0] == '[');
-//    // 确定右端点是否包含
-//    interval->right_inclusive = (str[len - 1] == ']');
+//int A[N], heapsize;
+//void max_heapify(int A[], int i) {
+//	int l = left(i), r = right(i), largest;
+//	if (l <= heapsize && A[l] > A[i]) {
+//		largest = l;
+//	}
+//	else {
+//		largest = i;
+//	}
+//	if (r <= heapsize && A[r] > A[largest]) {
+//		largest = r;
+//	}
+//	if (largest != i) {
+//		exchange(&A[i], &A[largest]);
+//		max_heapify(A, largest);
+//	}
 //
-//    int i = 1;
-//    char left_str[10] = { 0 };
-//    // 提取左端点字符
-//    while (str[i] != ',') {
-//        left_str[i - 1] = str[i];
-//        i++;
-//    }
-//    interval->left = atoi(left_str);
+//   
+//}
 //
-//    i++;
-//    char right_str[10] = { 0 };
-//    int j = 0;
-//    // 提取右端点字符
-//    while (i < len - 1) {
-//        right_str[j] = str[i];
-//        i++;
-//        j++;
-//    }
-//    interval->right = atoi(right_str);
+//void build_max_heap(int A[]) {
+//   
+//	for (int i = heapsize / 2; i >= 1; i--) {
+//		max_heapify(A, i);
+//	}
+//}
 //
-//    return 1;
+//int heap_maximum(int A[]) {
+//    
+//	
+//	return A[1];
+//}
+//
+//int heap_extract_max(int A[]) {
+//    
+//	if (heapsize < 1) {
+//		printf("heap underflow\n");
+//		exit(0);
+//	}
+//	int max = A[1];
+//	A[1] = A[heapsize];
+//	heapsize--;
+//	max_heapify(A, 1);
+//	return max;
+//}
+//
+//void max_heap_insert(int A[], int key) {
+//   
+//	heapsize++;
+//	A[heapsize] = -1; // 先将最后一个元素设为-1
+//	increase_key(A, heapsize, key);
 //}
 //
 //int main() {
-//    char line[100];
-//    Interval intervals[100];
-//    int count = 0;
+//    int n, m;
+//    scanf("%d %d", &n, &m);
+//    for (int i = 1; i <= m; i++)
+//        scanf("%d", &A[i]);
+//    // 建堆
+//    heapsize = m;
+//    build_max_heap(A);
 //
-//    while (1) {
-//        // 读取一行输入
-//        if (fgets(line, sizeof(line), stdin) == NULL) {
+//    for (int i = 0; i < n; i++) {
+//        char op[10];
+//        scanf("%s", op);
+//        int key;
+//        switch (op[1]) {
+//        case 'a': // max
+//            printf("%d\n", heap_maximum(A));
 //            break;
-//        }
-//        // 去除行末的换行符
-//        line[strcspn(line, "\n")] = '\0';
-//
-//        if (strlen(line) == 0) {
+//        case 'o': // pop
+//            printf("%d\n", heap_extract_max(A));
 //            break;
-//        }
-//
-//        Interval interval;
-//        if (parse_interval(line, &interval)) {
-//            intervals[count] = interval;
-//            count++;
-//        }
-//        else {
-//            printf("输入格式错误，请重新输入。\n");
+//        case 'u': // push
+//            scanf("%d", &key);
+//            max_heap_insert(A, key);
+//            break;
 //        }
 //    }
-//
-//    // 输出读取到的区间
-//    printf("读取到的区间为:\n");
-//    for (int i = 0; i < count; i++) {
-//        printf("[%s%d, %d%s]\n",
-//            intervals[i].left_inclusive ? "[" : "(",
-//            intervals[i].left,
-//            intervals[i].right,
-//            intervals[i].right_inclusive ? "]" : ")");
+//    while (heapsize) { // 输出堆中元素
+//        printf("%d ", heap_extract_max(A));
 //    }
 //
 //    return 0;
