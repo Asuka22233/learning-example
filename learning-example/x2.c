@@ -19,8 +19,7 @@ void ExGCD(int a, int b, int* d, int* x, int* y)
     
 	*y = xx - (a / b) * yy; //将xx-(a/b)*yy赋给y指向的变量
 
-    //根据伪代码，调用ExGCD，传入dd,xx,yy的【地址】获得计算结果
-    //根据伪代码进行计算，并赋给d,x,y指向的变量
+   
 }
 int main()
 {
