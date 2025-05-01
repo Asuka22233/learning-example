@@ -1,37 +1,70 @@
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <limits.h>
-//
-//// 计算最大价值的函数
-//int cutRod(int price[], int n) {
-//    int* r = (int*)malloc((n + 1) * sizeof(int));
-//    if (r == NULL) {
-//        fprintf(stderr, "内存分配失败\n");
-//        return -1;
-//    }
-//    r[0] = 0;
-//
-//    // 计算每个长度的最大价值
-//    for (int i = 1; i <= n; i++) {
-//        int max_val = INT_MIN;
-//        for (int j = 1; j <= i; j++) {
-//            int current_val = price[j - 1] + r[i - j];
-//            if (current_val > max_val) {
-//                max_val = current_val;
-//            }
-//        }
-//        r[i] = max_val;
-//    }
-//
-//    int result = r[n];
-//    free(r);
-//    return result;
-//}
-//
-//int main() {
-//    int price[] = { 1, 5, 8, 9, 10, 17, 17, 20 };
-//    int n = sizeof(price) / sizeof(price[0]);
-//    int max_value = cutRod(price, n);
-//    printf("长度为 %d 的钢管切割后的最大价值为: %d\n", n, max_value);
-//    return 0;
-//}
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+
+int a[500000];
+int binary_search(int a[], int n, int target) {
+	int left = 0;
+	int right = n-1 ;
+
+	while (left <= right) {
+		int mid = left + (right - left) / 2;
+
+		if (a[mid] == target) {
+			return mid;
+		}
+		else if (a[mid] < target) {
+			left = mid + 1;
+		}
+		else {
+			right = mid - 1;
+		}
+	}
+
+	return -1;
+}
+int cmp(const void* p1, const void* p2) {
+	int x = *(int*)p1;
+	int y = *(int*)p2;
+	if (x > y)
+		return 1;
+	if (x < y)
+		return -1;
+	else
+		return 0;
+}
+
+int main() {
+	int n = 0;
+	char str[4];
+	while (scanf("%s",str) != EOF) {
+		int x;
+		x = (str[0] - 'a'+1)*1000000+ (str[1] - 'a' + 1) * 10000+ (str[2] - 'a' + 1) * 100+ (str[3] - 'a' + 1);
+		if (n == 0) {
+			a[n] = x;
+			n++;
+			printf("Ciallo~\n");
+		}
+		else {
+			int y = binary_search(a, n, x);
+			if (y == -1) {
+				
+				a[n] = x;
+				n++;
+				qsort(a, n, sizeof(int), cmp);
+				
+				
+				printf("Ciallo~\n");
+			}
+			else {
+				printf("Repeated!\n");
+			}
+
+			
+		}
+
+	}
+
+    return 0;
+}
