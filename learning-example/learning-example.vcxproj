@@ -128,8 +128,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="x1.c" />
+    <ClCompile Include="X1.cpp" />
     <ClCompile Include="x2.c" />
+    <ClCompile Include="X2.cpp" />
     <ClCompile Include="x3.c" />
+    <ClCompile Include="X3.cpp" />
     <ClCompile Include="x4.c" />
     <ClCompile Include="x5.c" />
     <ClCompile Include="x6.c" />
