@@ -29,7 +29,7 @@ int main() {
     }
 
     // 排序两个数组
-    qsort(arr1, size1+1, sizeof(long long), compare);
+    qsort(arr1, size1, sizeof(long long), compare);
     qsort(arr2, size2, sizeof(long long), compare);
 
     // 查找公共元素并生成去重后的唯一元素数组
