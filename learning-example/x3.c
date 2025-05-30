@@ -1,99 +1,73 @@
-//
-//#include<stdio.h>
-//#include<stdlib.h>
-//#include<string.h>
-//typedef struct hj{
-//	int x;
-//	struct hj *y;
-//} P,*p;
-// void f(int d,p a)
-//{
-//	 a->y = (p)malloc(sizeof(P));
-//	 p b = a->y;
-//	 for (int i = 0; i < d; i++)
-//	 {
-//		 p c = (p)malloc(sizeof(P));
-//		 scanf("%d", &c->x);
-//		 b->y = c;
-//		 b = c;
-//	 }
-//	 b->y = NULL;
-//	 return;
-//
-//
-//}
-// void g(p a, int k, int l)
-// {
-//	 p b = a;
-//	 for (int i = 0; i < k; i++)
-//	 {
-//		 b= b->y;
-//	 }
-//	 if (b != NULL)
-//	 {
-//		 p c = (p)malloc(sizeof(P));
-//		 c->x = l;
-//		 c->y = b->y;
-//		 printf("Success!\n");
-//	 }
-//	 else
-//	 {
-//		 printf("Fail!\n");
-//	 }
-// }
-// void h(p a, int k, int l)
-// {
-//	 p b = a->y;
-//	 while (b != NULL)
-//	 {
-//		 if (b->x == k)
-//		 {
-//			 p c = (p)malloc(sizeof(P));
-//			 c->x = l;
-//			 c->y = b->y;
-//			 printf("Success!\n");
-//			 return;
-//		 }
-//		 b = b->y;
-//	 }
-//	 if (b == NULL)
-//	 {
-//		 printf("Fail!\n");
-//	 }
-//
-// }
-// void pt(p a)
-// {
-//	 p b = a->y;
-//	 while (b != NULL)
-//	 {
-//		 printf("%d ", b->x);
-//		 b = b->y;
-//	 }
-//	 printf("\n");
-// }
-//
-//int main()
-//{
-//	int n, m;
-//	scanf("%d %d", &n, &m);
-//	p a = (p)malloc(sizeof(P) );
-//	f(n, a);
-//	for (int i = 0; i < m; i++)
-//	{
-//		int op, k, l;
-//		scanf("%d %d %d", &op, &k, &l);
-//		if (op == 1)
-//		{
-//			g(a, k, l);
-//		}
-//		if (op == 0)
-//		{
-//			h(a, k, l);
-//
-//		}
-//	}
-//	pt(a);
-//
-//	return 0;
-//}
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 1000
+
+int compare(const void* a, const void* b) {
+    long long x = *(const long long*)a;
+    long long y = *(const long long*)b;
+    return (x < y) ? -1 : (x > y) ? 1 : 0;
+}
+
+int main() {
+    long long arr1[MAX_SIZE], arr2[MAX_SIZE];
+    long long common[MAX_SIZE], unique1[MAX_SIZE], unique2[MAX_SIZE];
+    int size1 = 0, size2 = 0, common_size = 0, unique1_size = 0, unique2_size = 0;
+
+    // 读取第一个数组
+    printf("请输入第一个数组（以非数字结束）：\n");
+    while (size1 < MAX_SIZE && scanf("%lld", &arr1[size1]) == 1) {
+        size1++;
+    }
+    // 清除输入缓冲区
+    while (getchar() != '\n');
+
+    // 读取第二个数组
+    printf("请输入第二个数组（以非数字结束）：\n");
+    while (size2 < MAX_SIZE && scanf("%lld", &arr2[size2]) == 1) {
+        size2++;
+    }
+
+    // 排序两个数组
+    qsort(arr1, size1+1, sizeof(long long), compare);
+    qsort(arr2, size2, sizeof(long long), compare);
+
+    // 查找公共元素并生成去重后的唯一元素数组
+    int i = 0, j = 0;
+    while (i < size1 && j < size2) {
+        if (arr1[i] < arr2[j]) {
+            unique1[unique1_size++] = arr1[i++];
+        }
+        else if (arr1[i] > arr2[j]) {
+            unique2[unique2_size++] = arr2[j++];
+        }
+        else {
+            common[common_size++] = arr1[i++];
+            j++; // 跳过重复比较
+        }
+    }
+    // 添加剩余元素
+    while (i < size1) unique1[unique1_size++] = arr1[i++];
+    while (j < size2) unique2[unique2_size++] = arr2[j++];
+
+    // 输出结果
+    printf("相同的元素：");
+    for (i = 0; i < common_size; i++) {
+        printf("%lld ", common[i]);
+    }
+    printf("\n");
+
+    printf("第一个数组去掉相同元素后：");
+    for (i = 0; i < unique1_size; i++) {
+        printf("%lld ", unique1[i]);
+    }
+    printf("\n");
+
+    printf("第二个数组去掉相同元素后：");
+    for (i = 0; i < unique2_size; i++) {
+        printf("%lld ", unique2[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
