@@ -1,64 +1,77 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-typedef int ElemType;
-int maxsize;
-ElemType stack[10000];
-int top = -1;
-int isEmpty()
-{
-	return top == -1;
-}
-int isFull()
-{
-	return top == maxsize - 1;
-}
-void Error(char s[]) {
-	puts(s);
-	exit(-1);
+#define MAXSIZE 10005;
 
-}
-void push(ElemType item) {
-	if (isFull())
-		Error("Full Stack!");
-	else
-		stack[++top] = item;
+int matchBrackets(char* exp) {
 
+	int i = 0, match = 1;
+	char ch, stack[10003];
+	int top = -1;
+	while (exp[i] != '\0' && match) {
 
-}
-ElemType pop() {
-	if (isEmpty())
-		Error("Empty Stack!");
-	else
-		return stack[top--];
+		if (exp[i] == '(' || exp[i] == '[' || exp[i] == '{')
+			stack[++top] == exp[i];
+		else if (exp[i] == ')') {
 
-}
-int main()
-{
-	int m;
-
-	scanf("%d%d", &maxsize, &m);
-	while (m--) {
-
-		char op[10];
-		scanf("%s", op);
-		if (strcmp(op, "show") == 0) {
-			printf("%d\nStack:", top + 1);
-			for (int i = 0;i <= top;++i)
-				printf("%d ", stack[i]);
-			putchar('\n');
+			if (top >= 0) {
+				ch = stack[top--];
+				if (ch != '(')
+					match = 0;
+			}
+			else match == 0;
 
 		}
-		else if (strcmp(op, "push") == 0) {
-			int item=0;
-			scanf("%d", item);
-			push(item);
+		else if (exp[i] == '[') {
+
+			if (top >= 0) {
+				ch = stack[top--];
+				if (ch != ']')
+					match = 0;
+			}
+			else match == 0;
 
 		}
-		else {
-			printf("%d", pop());
+		else if (exp[i] == '{') {
+
+			if (top >= 0) {
+				ch = stack[top--];
+				if (ch != '}')
+					match = 0;
+			}
+			else match == 0;
+
 		}
+
+
+
+	}
+	if (top != 0)
+		match = 0;
+	return match;
+
+
+
+
+
+
+ }
+
+
+
+int main() {
+
+	int n;
+	scanf("%d", &n);
+	while (n--) {
+		char exp[10005];
+		scanf("%*d%s", exp);
+		puts(matchBrackets(exp) ? "true" : "false");
+
+
+
+
+
 	}
 	return 0;
-
 }
