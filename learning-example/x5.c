@@ -3,118 +3,48 @@
 #include<string.h>
 #include <ctype.h>
 
-int f(char op) {
-	if (op == '+' || op == '-')
-		return 1;
-	if (op == '*' || op == '/')
-		return 1;
-	return 0;
+int QUEUE[100];
+int Front, Rear, Count;
+int m;
+int isEmpty(){
+	return Count == 0;
+}
+int isFull() {
+	return Count == 0;
 
 }
-void g(char* a, char* b) {
-	char stack[104];
-	int top = -1;
-	int j = 0;
-	for (int i = 0;a[i] != '\0';i++) {
-		if (isdigit(a[i])) {
-			while (isdigit(a[i])) {
-				b[j++] = a[i++];
-			}
-			b[j++] = ' ';
-			i--;
-		}
-		else if (a[i] == '(') {
-			stack[top] = a[i];
-		}
-		else if (a[i] == ')') {
-			while (top >= 0 && stack[top] != '(') {
-				b[j++] = stack[top--];
-				b[j++] = ' ';
-
-			}
-			top--;
-		}
-		else if (a[i] == '+' || a[i] == '-' || a[i] == '*' || a[i] == '/') {
-			while (top >= 0 && f(stack[top]) >= f(a[i])) {
-				b[j++] = stack[top--];
-					b[j++] = ' ';
-
-			}
-			stack[++top] = a[i];
-
-		}
-		
-
-	}
-	while (top >= 0) {
-		b[j++] = stack[top--];
-		b[j++] = ' ';
-
-	}
-	b[j] = '\0';
-
-
+void Error(char* s) {
+	puts(s);
+	exit(1);
 }
+void enQueue(int queue[], int item) {
 
-double z(char* b) {
-	double stack[104];
-	int top = -1;
-	for (int i = 0;b[i] != '\0';i++) {
-		if (isdigit(b[i])) {
-			double num = 0;
-			while (isdigit(b[i])) {
-				num = num * 10 + (b[i] - '0');
-				i++;
+	if (isFull())
+		Error("x");
+	else {
+		queue[Rear] = item;
+		Count++;
+		Rear = (Rear + 1) % m;
 
-			}
-			stack[++top] = num;
-		}
-		else if (b[i] == '+' || b[i] == '-' || b[i] == '*' || b[i] == '/') {
-
-			double x2 = stack[top--];
-			double x1 = stack[top--];
-			switch(b[i]) {
-
-				case'+':
-					stack[++top] = x1 + x2;
-					break;
-				case'-':
-					stack[++top] = x1 - x2;
-					break;
-				case'*':
-					stack[++top] = x1 * x2;
-					break;
-				case'/':
-					stack[++top] = x1 / x2;
-					break;
-
-
-
-			}
-
-
-		}
-		
 
 	}
 
-	return stack[top];
-
-
 }
+int deQueue(int queue[]) {
+	int e;
+	if (isEmpty())
+		Error("x");
+	else {
+		e = queue[Front];
+		Count--;
+		Front = (Front + 1) % m;
+		return e;
 
 
+	}
+}
+void show() {
+	int temp;
 
-
-
-int main() {
-	char a[105];
-	char b[105];
-	fgets(a, 105, stdin);
-	a[strcspn(a, "=\n")] = '\0';
-	g(a, b);
-	double result = z(b);
-	printf("%.2f\n", result);
-	return 0;
 
 }
