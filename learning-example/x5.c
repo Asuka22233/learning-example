@@ -1,77 +1,37 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#define MAXSIZE 10005;
 
-int matchBrackets(char* exp) {
-
-	int i = 0, match = 1;
-	char ch, stack[10003];
-	int top = -1;
-	while (exp[i] != '\0' && match) {
-
-		if (exp[i] == '(' || exp[i] == '[' || exp[i] == '{')
-			stack[++top] == exp[i];
-		else if (exp[i] == ')') {
-
-			if (top >= 0) {
-				ch = stack[top--];
-				if (ch != '(')
-					match = 0;
-			}
-			else match == 0;
-
-		}
-		else if (exp[i] == '[') {
-
-			if (top >= 0) {
-				ch = stack[top--];
-				if (ch != ']')
-					match = 0;
-			}
-			else match == 0;
-
-		}
-		else if (exp[i] == '{') {
-
-			if (top >= 0) {
-				ch = stack[top--];
-				if (ch != '}')
-					match = 0;
-			}
-			else match == 0;
-
-		}
-
-
-
-	}
-	if (top != 0)
-		match = 0;
-	return match;
-
-
-
-
-
-
- }
-
-
-
+int k;
+int f[10004];
+int st[10004];
+int top;
+int l[1004], r[1003];
 int main() {
+	scanf("%d", k);
+	for (int i = 1;i <= k;i++)
+		scanf("%d", &f[i]);
+	top = 0;
+	for (int i = 1;i <= k;i++) {
 
-	int n;
-	scanf("%d", &n);
-	while (n--) {
-		char exp[10005];
-		scanf("%*d%s", exp);
-		puts(matchBrackets(exp) ? "true" : "false");
-
-
-
-
-
+		while (top && f[st[top]] <= f[i])
+			top--;
+		if (top)
+			l[i] = st[top];
+		st[++top] = i;
 	}
+	top = 0;
+	for (int i = k;i ;i--) {
+
+		while (top && f[st[top]] <= f[i])
+			top--;
+		if (top)
+			r[i] = st[top];
+		st[++top] = i;
+	}
+	for (int i = 1;i <= k;i++)
+		printf("%d %d\n", l[i], r[i]);
 	return 0;
+
+
 }
