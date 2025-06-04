@@ -10,65 +10,62 @@ typedef struct _Node {
 List read_list(int n) {
 	List head = (List)malloc(sizeof(Node));
 	List tail = head;
-	for (int i = 0;i < n;++i) {
-		List node = (List)malloc(sizeof(node));
+	for (int i = 0;i < n;i++) {
+		List node = (List)malloc(sizeof(Node));
 		scanf("%d", &node->data);
 		tail->next = node;
 		tail = node;
-
 	}
 	tail->next = NULL;
 	return head;
 
-}
 
-void insert_by_index(List list, int k, int data) {
+
+
+}
+void del_by_index(List list, int x) {
+
 	List p = list;
-	for (int i = 0;i < k;++i) {
-		if (p == NULL) break;
+	for (int i = 1;p->next && i < x;i++)
 		p = p->next;
+	if (p->next) {
 
-
+		List q = p->next;
+		p->next = q->next;
+		free(q);
+		puts("Success!");
 	}
-	if (p == NULL) {
+	else
 		puts("Fail!");
-		return;
-	}
 
-	List node = (List)malloc(sizeof(Node));
-	node->data = data;
-	node->next = p->next;
-	p->next = node;
-	puts("Success!");
+
 
 
 }
 
-void insert_by_data(List list, int v, int data) {
+void del_by_data(List list, int x) {
 
-	List p = list->next;
-	while (p != NULL) {
-		if (p->data == v) {
-			List node = (List)malloc(sizeof(node));
-			node->data = data;
-			node->next = p->next;
-			p->next = node;
-			puts("Success!");
-			return;
-		}
-		else
-			p = p->next;
+	List p = list;
+	while (p->next && p->next->data != x)p = p->next;
+	if (p->next) {
 
+		List q = p->next;
+		p->next = q->next;
+		free(q);
+		puts("Success!");
 	}
-	puts("Fail!");
-
+	else
+		puts("Fail!");
 
 }
+
 void print_list(List list)
 {
-	for (List p = list->next;p;p = p->next)
+
+	for (List p = p->next;p;p = p->next)
 		printf("%d", p->data);
-	printf("\n");
+	putchar('\n');
+
 
 }
 
@@ -78,20 +75,16 @@ int main() {
 	scanf("%d%d", &n, &m);
 	List list = read_list(n);
 	while (m--) {
-
-		int op, x, data;
+		int op,x;
+		scanf("%d%d", &op, &x);
 		if (op == 1)
-			insert_by_index(list, x, data);
+			del_by_index(list, x);
 		else
-			insert_by_data(list, x, data);
-
-
+			del_by_data(list, x);
 
 
 	}
+
 	print_list(list);
 	return 0;
-
-
-
 }
